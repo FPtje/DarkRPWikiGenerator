@@ -169,6 +169,8 @@ local functionWikiLayout =
 ]]
 
 local function getFunctionArguments(stub)
+	if #stub.parameters == 0 then return nil end
+	
 	local params = {}
 	for k,v in pairs(stub.parameters) do
 		table.insert(params, 
@@ -201,7 +203,7 @@ local function getFunctionWikiPage(stub)
 		inlineReturns,
 		stub.metatable.MetaName,
 		realmSide[stub.realm],
-		getFunctionArguments(stub),
+		getFunctionArguments(stub) or "This function does not take any arguments.",
 		getParameters(stub.returns) or "This function does not return any value."
 	)
 end
