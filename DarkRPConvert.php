@@ -21,10 +21,64 @@ catch ( Exception $e )
     return;
 }
 
-$testpage = $wiki->getPage("BotTest");
-$testpage->delete("it was just a test");
+function createWikiPage($name, $content)
+{
+	global $wiki;
 
-$testpage = $wiki->getPage("BotTest/test2");
-$testpage->delete("it was just a test");
-print_r($wiki->getError());
+	$page = $wiki->getPage($name);
+	$page->setText($content);
+}
+
+$ignore = [
+	"." => true,
+	".." => true
+];
+
+/*
+	Get hooks
+*/
+
+if (!($hookFolderHandle = opendir('pages/hooks'))) {echo "ERROR GETTING HOOK FOLDERS\n"; return;}
+while (false !== ($hookRealm = readdir($hookFolderHandle))) {
+	if (array_key_exists($hookRealm, $ignore)) { continue; }
+
+	if (!($hookRealmFolder = opendir("pages/hooks/$hookRealm"))) {echo "ERROR GETTING REALMS\n"; return;}
+
+	while (false !== ($hookFile = readdir($hookRealmFolder))) {
+		if (array_key_exists($hookFile, $ignore)) { continue; }
+		$nicename = substr("hooks/$hookRealm/$hookFile", 0, -4);
+		$contents = file_get_contents("pages/hooks/$hookRealm/$hookFile");
+		echo "$nicename\n";
+
+		// Write to wiki
+		createWikiPage($nicename, $contents);
+	}
+}
+
+/*
+	Get functions
+*/
+if (!($functionFolderHandle = opendir('pages/functions'))) {echo "ERROR GETTING FUNCTION FOLDERS\n"; return;}
+
+while (false !== ($metatable = readdir($functionFolderHandle))) {
+	if (array_key_exists($metatable, $ignore)) { continue; }
+
+	if (!($functionMetatableFolder = opendir("pages/functions/$metatable"))) {echo "ERROR GETTING METATABLES\n"; return;}
+
+	while (false !== ($functionRealm = readdir($functionMetatableFolder))) {
+		if (array_key_exists($functionRealm, $ignore)) { continue; }
+
+		if (!($fnRealmFolder = opendir("pages/functions/$metatable/$functionRealm"))) {echo "ERROR GETTING REALMS\n"; return;}
+
+		while (false !== ($file = readdir($fnRealmFolder))) {
+			if (array_key_exists($file, $ignore)) { continue; }
+			$nicename = substr("functions/$metatable/$functionRealm/$file", 0, -4);		
+			echo "$nicename\n";
+			$contents = file_get_contents("pages/functions/$metatable/$functionRealm/$file");
+
+			// Write to wiki
+			createWikiPage($nicename, $contents);
+		}
+	}
+}
 ?>
