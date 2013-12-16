@@ -72,7 +72,7 @@ while (false !== ($metatable = readdir($functionFolderHandle))) {
 
 		while (false !== ($file = readdir($fnRealmFolder))) {
 			if (array_key_exists($file, $ignore)) { continue; }
-			$nicename = substr("functions/$metatable/$functionRealm/$file", 0, -4);		
+			$nicename = substr("functions/$metatable/$functionRealm/$file", 0, -4);
 			echo "$nicename\n";
 			$contents = file_get_contents("pages/functions/$metatable/$functionRealm/$file");
 

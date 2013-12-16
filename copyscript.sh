@@ -1,3 +1,4 @@
+#!/bin/bash
 rm -r ~/.local/share/Steam/SteamApps/common/GarrysMod/garrysmod/data/darkrpwiki
 read -p "Enter darkrp_generatewiki in gmod console
 "
