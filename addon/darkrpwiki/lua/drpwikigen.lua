@@ -153,7 +153,7 @@ local functionWikiLayout =
 "[[Category:%s|%s]]\n" ..
 "[[Category:%s|%s]]\n" ..
 [[{{Lua_function |
-	function_name	= %s.%s |
+	function_name	= %s%s%s |
 	arguments	= %s |
 	description	= %s |
 	returns 	= %s |
@@ -197,6 +197,7 @@ local function getFunctionWikiPage(stub)
 		realmSide[stub.realm],
 		stub.name,
 		stub.metatable.MetaName,
+		stub.metatable.MetaName == "DarkRP" and "." or ":",
 		stub.name,
 		getInlineParams(stub.parameters),
 		stub.description,
