@@ -1,6 +1,8 @@
 <?php
 include "globals.php";
 
+ini_set('safe_mode', false);
+
 $api_url = "http://wiki.darkrp.com/api.php";
 $username = "DarkRPBot";
 $password = file("botpassword.txt")[0];
