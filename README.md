@@ -1,4 +1,4 @@
-This is a fork of Wikimate, which can be found here:
-https://github.com/hamstar/Wikimate
+# DEPRECATED
 
-The current version of this application is designed to work for Linux only, for it is easier in development.
+This wiki generator does not work with the latest DarkRP Wiki anymore. Please use [DarkRPWikiGen](https://github.com/FPtje/DarkRPWikiGen) instead!
+
